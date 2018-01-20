@@ -9,12 +9,13 @@ namespace KBVault.Web.ViewEngines
 {
     public class KbVaultViewEngine : RazorViewEngine
     {
-        public KbVaultViewEngine():base()
-        {            
+        public KbVaultViewEngine()
+            : base()
+        {
             var viewLocations = new[] {
             "~/Views/{1}/{0}.cshtml",
             "~/Views/Themes/%THEME%/{1}/{0}.cshtml",
-            "~/Views/Shared/{0}.cshtml"                       
+            "~/Views/Shared/{0}.cshtml"
             // etc
              };
 
@@ -22,21 +23,21 @@ namespace KBVault.Web.ViewEngines
             this.ViewLocationFormats = viewLocations;
         }
 
-        private string Theme => ConfigurationManager.AppSettings["Theme"];                    
+        private string Theme = ConfigurationManager.AppSettings["Theme"];
 
         protected override IView CreatePartialView(ControllerContext controllerContext, string partialPath)
-	    {	        
-	        return base.CreatePartialView(controllerContext, partialPath.Replace("%THEME%", Theme));
-	    }
+        {
+            return base.CreatePartialView(controllerContext, partialPath.Replace("%THEME%", Theme));
+        }
 
         protected override IView CreateView(ControllerContext controllerContext, string viewPath, string masterPath)
-        {            
+        {
             return base.CreateView(controllerContext, viewPath.Replace("%THEME%", Theme), masterPath.Replace("%THEME%", Theme));
         }
 
         protected override bool FileExists(ControllerContext controllerContext, string virtualPath)
-	    {	        
-	        return base.FileExists(controllerContext, virtualPath.Replace("%THEME%", Theme));
-	    }
+        {
+            return base.FileExists(controllerContext, virtualPath.Replace("%THEME%", Theme));
+        }
     }
 }

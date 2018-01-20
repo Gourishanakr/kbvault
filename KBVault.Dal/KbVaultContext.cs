@@ -31,7 +31,6 @@ namespace KBVault.Dal
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             //modelBuilder.ComplexType<TopTagItem>();
-            
 
             modelBuilder.Entity<Article>()
                 .Property(e => e.SefName)
@@ -141,7 +140,7 @@ namespace KBVault.Dal
                 string modifiedProperty = props.FirstOrDefault();
                 bool isUserViewAction = props.Count() == 1 && modifiedProperty == "Views";
                 bool isProfileUpdateAction = (entry.Entity is Entities.KbUser);
-                // if only 
+                // if only
                 if (!entry.IsRelationship && !isUserViewAction && !isProfileUpdateAction)
                 {
                     string operationDescription = "";
@@ -154,12 +153,15 @@ namespace KBVault.Dal
                         case EntityState.Added:
                             operationDescription = "Added ";
                             break;
+
                         case EntityState.Deleted:
                             operationDescription = "Deleted ";
                             break;
+
                         case EntityState.Modified:
                             operationDescription = "Modified ";
                             break;
+
                         default:
                             break;
                     }
@@ -222,9 +224,11 @@ namespace KBVault.Dal
                         case EntityState.Added:
                             // write log...
                             break;
+
                         case EntityState.Deleted:
                             // write log...
                             break;
+
                         case EntityState.Modified:
                             {
                                 foreach (string propertyName in
@@ -255,7 +259,6 @@ namespace KBVault.Dal
             }
 
             return base.SaveChanges();
-        }                                               
-        
+        }
     }
 }
