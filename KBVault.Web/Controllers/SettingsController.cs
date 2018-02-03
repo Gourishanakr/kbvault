@@ -35,7 +35,7 @@ namespace KBVault.Web.Controllers
                         {
                             db.Settings.Remove(set);
                         }
-                        set = new Settings();   
+                        set = new Settings();
                         set.CompanyName = model.CompanyName;
                         set.ArticleCountPerCategoryOnHomePage = model.ArticleCountPerCategoryOnHomePage;
                         set.DisqusShortName = model.DisqusShortName;
@@ -45,8 +45,8 @@ namespace KBVault.Web.Controllers
                         set.IndexFileExtensions = model.IndexFileExtensions;
                         set.ArticlePrefix = model.ArticlePrefix;
                         set.AnalyticsAccount = model.AnalyticsAccount;
-                        set.Author = KBVaultHelperFunctions.UserAsKbUser(User).Id;                        
-                        set.BackupPath = model.BackupPath;                        
+                        set.Author = KBVaultHelperFunctions.UserAsKbUser(User).Id;
+                        set.BackupPath = model.BackupPath;
                         set.ShowTotalArticleCountOnFrontPage = model.ShowTotalArticleCountOnFrontPage;
                         if (!string.IsNullOrEmpty(set.BackupPath))
                         {
@@ -55,10 +55,27 @@ namespace KBVault.Web.Controllers
                             if (!set.BackupPath.EndsWith("/") && set.BackupPath.StartsWith("~"))
                                 set.BackupPath += "/";
                         }
-                        ConfigurationManager.AppSettings["Theme"] = model.SelectedTheme;
+
                         db.Settings.Add(set);
                         db.SaveChanges();
                         ShowOperationMessage(UIResources.SettingsPageSaveSuccessfull);
+
+                        Configuration config = null; //ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+                        if (System.Web.HttpContext.Current != null)
+                        {
+                            config =
+                                System.Web.Configuration.WebConfigurationManager.OpenWebConfiguration("~");
+                        }
+                        else
+                        {
+                            config =
+                                ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+                        }
+                        config.AppSettings.Settings["Theme"].Value = model.SelectedTheme;
+                        config.Save(ConfigurationSaveMode.Modified);
+                        //ConfigurationManager.AppSettings["Theme"] = model.SelectedTheme;
+                        KBVault.Web.ViewEngines.KbVaultViewEngine.Theme = model.SelectedTheme;
+                        ConfigurationManager.RefreshSection("appSettings");
                     }
                 }
                 model.Themes.AddRange(Directory.EnumerateDirectories(Server.MapPath("~/Views/Themes")).Select(e => Path.GetFileName(e)).ToList());
@@ -76,15 +93,16 @@ namespace KBVault.Web.Controllers
         {
             try
             {
-                using(var db = new KbVaultContext())
+                using (var db = new KbVaultContext())
                 {
                     ViewBag.UpdateSuccessfull = false;
                     Settings set = db.Settings.FirstOrDefault();
                     SettingsViewModel model = new SettingsViewModel(set);
                     model.SelectedTheme = ConfigurationManager.AppSettings["Theme"];
                     var a = typeof(SettingsController).Assembly;
-                    model.ApplicationVersion = a.GetName().Version.Major + "." + a.GetName().Version.Minor;                    
-                    model.Themes.AddRange(Directory.EnumerateDirectories(Server.MapPath("~/Views/Home/Themes")).Select(e => Path.GetFileName(e)).ToList());                    
+                    model.ApplicationVersion = a.GetName().Version.Major + "." + a.GetName().Version.Minor;
+                    //model.Themes.AddRange(Directory.EnumerateDirectories(Server.MapPath("~/Views/Home/Themes")).Select(e => Path.GetFileName(e)).ToList());
+                    model.Themes.AddRange(Directory.EnumerateDirectories(Server.MapPath("~/Views/Themes")).Select(e => Path.GetFileName(e)).ToList());
                     return View(model);
                 }
             }
@@ -95,6 +113,5 @@ namespace KBVault.Web.Controllers
                 return RedirectToAction("Index", "Error");
             }
         }
-
     }
 }

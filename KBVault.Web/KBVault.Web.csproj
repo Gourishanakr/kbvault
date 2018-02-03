@@ -782,10 +782,14 @@
     <Content Include="Assets\img\ajax-loader.gif" />
     <Content Include="Assets\img\ajax-loader1.gif" />
     <Content Include="Assets\img\bar-ajax-loader.gif" />
+    <Content Include="Assets\img\dotsquares-web-design.png" />
     <Content Include="Assets\js\plugins\cookie\jquery.cookie.js" />
     <Content Include="Assets\js\plugins\smartmenus\jquery.smartmenus.bootstrap.js" />
     <Content Include="Assets\js\plugins\smartmenus\jquery.smartmenus.js" />
     <Content Include="Assets\js\plugins\smartmenus\jquery.smartmenus.keyboard.js" />
+    <Content Include="Assets\Themes\Theme1\css\site.css" />
+    <Content Include="Assets\Themes\Theme1\img\bg.png" />
+    <Content Include="Assets\Themes\Theme1\js\frontend.js" />
     <Content Include="Assets\Themes\Default\img\bg.png" />
     <Content Include="Assets\img\BigFile-Vault.png" />
     <Content Include="Assets\img\blur-background08.jpg" />
@@ -1008,10 +1012,19 @@
     <Content Include="Views\Themes\Default\Home\Index.cshtml" />
     <Content Include="Views\Themes\Default\_Layout.cshtml" />
     <Content Include="Views\Themes\Default\_ViewStart.cshtml" />
+    <Content Include="Views\Themes\Theme1\_Layout.cshtml" />
+    <Content Include="Views\Themes\Theme1\_ViewStart.cshtml" />
+    <Content Include="Views\Themes\Theme1\Home\ArticleNotFound.cshtml" />
+    <Content Include="Views\Themes\Theme1\Home\Categories.cshtml" />
+    <Content Include="Views\Themes\Theme1\Home\Detail.cshtml" />
+    <Content Include="Views\Themes\Theme1\Home\Index.cshtml" />
+    <Content Include="Views\Themes\Theme1\Home\Tags.cshtml" />
+    <Content Include="Views\Themes\Theme1\Search\Do.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Assets\Themes\Default\fonts\" />
+    <Folder Include="Assets\Themes\Theme1\fonts\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

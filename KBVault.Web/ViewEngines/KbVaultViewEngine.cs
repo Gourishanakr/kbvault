@@ -23,7 +23,7 @@ namespace KBVault.Web.ViewEngines
             this.ViewLocationFormats = viewLocations;
         }
 
-        private string Theme = ConfigurationManager.AppSettings["Theme"];
+        public static string Theme = ConfigurationManager.AppSettings["Theme"];
 
         protected override IView CreatePartialView(ControllerContext controllerContext, string partialPath)
         {
